@@ -10,7 +10,6 @@ class BestSellerListView extends StatelessWidget {
     return ListView.builder(
       clipBehavior: Clip.none,
       shrinkWrap: true,
-      
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
       itemCount: 20,
