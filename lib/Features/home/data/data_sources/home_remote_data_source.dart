@@ -35,6 +35,8 @@ class HomeRemoteDataSourcesImpel extends HomeRemoteDataSources {
       },
     );
     List<BookEntity> books = getBookList(data);
+    saveBooksData(books, kNewestBox);
+
     return books;
   }
 
