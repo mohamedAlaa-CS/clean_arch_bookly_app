@@ -21,17 +21,25 @@ class HomeRemoteDataSourcesImpel extends HomeRemoteDataSources {
     return books;
   }
 
+  @override
+  Future<List<BookEntity>> fechNewstBooks() async {
+    var data = await ApiServices.get(
+      endPoint: 'volumes',
+      query: {
+        'Filtering': 'free-ebooks',
+        'q': 'programming',
+        'Sorting': 'newst',
+      },
+    );
+    List<BookEntity> books = getBookList(data);
+    return books;
+  }
+
   List<BookEntity> getBookList(Map<String, dynamic> data) {
     List<BookEntity> books = [];
     for (var bookMap in data['items']) {
       books.add(BookModel.fromJson(bookMap));
     }
     return books;
-  }
-
-  @override
-  Future<List<BookEntity>> fechNewstBooks() {
-    // TODO: implement fechNewstBooks
-    throw UnimplementedError();
   }
 }
