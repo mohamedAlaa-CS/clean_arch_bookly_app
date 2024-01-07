@@ -8,7 +8,7 @@ class NewestBooksCubitCubit extends Cubit<NewestBooksState> {
       : super(NewestBooksInitial());
 
   final FetchNewsBooksUseCase fetchNewsBooksUseCase;
-
+//test git hub to vs
   static NewestBooksCubitCubit get(context) => BlocProvider.of(context);
 
   List<BookEntity> newestBooksList = [];
@@ -20,6 +20,7 @@ class NewestBooksCubitCubit extends Cubit<NewestBooksState> {
     }, (success) {
       emit(NewestBooksSuccess());
       newestBooksList.addAll(success);
+    
     });
   }
 }
