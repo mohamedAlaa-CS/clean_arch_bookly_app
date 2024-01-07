@@ -1,13 +1,13 @@
-abstract class NewestBooksCubitState {}
+abstract class NewestBooksState {}
 
-class NewestBooksCubitInitial extends NewestBooksCubitState {}
+class NewestBooksInitial extends NewestBooksState {}
 
-class NewestBooksCubitLoading extends NewestBooksCubitState {}
+class NewestBooksLoading extends NewestBooksState {}
 
-class NewestBooksCubitFailure extends NewestBooksCubitState {
+class NewestBooksFailure extends NewestBooksState {
   final String errorMessage;
 
-  NewestBooksCubitFailure({required this.errorMessage});
+  NewestBooksFailure({required this.errorMessage});
 }
 
-class NewestBooksCubitSuccess extends NewestBooksCubitState {}
+class NewestBooksSuccess extends NewestBooksState {}
