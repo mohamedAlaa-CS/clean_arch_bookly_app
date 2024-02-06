@@ -1,5 +1,3 @@
-import 'package:bookly/Features/home/data/data_sources/home_local_data_source.dart';
-import 'package:bookly/Features/home/data/data_sources/home_remote_data_source.dart';
 import 'package:bookly/Features/home/data/repos/home_repo.dart';
 import 'package:bookly/Features/home/domain/entities/book_entity.dart';
 import 'package:bookly/Features/home/domain/use_cases/fetch_featuered_books_use_case.dart';
@@ -9,6 +7,7 @@ import 'package:bookly/Features/home/presentation/manager/newest_books_cubit/new
 import 'package:bookly/constants.dart';
 import 'package:bookly/core/utils/api_service.dart';
 import 'package:bookly/core/utils/app_router.dart';
+import 'package:bookly/core/utils/functions/setup_service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,6 +15,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   ApiServices.init();
+  setupServiceLocator();
   await Hive.initFlutter();
   Hive.registerAdapter(BookEntityAdapter());
   await Hive.openBox<BookEntity>(kFeatueredBox);
@@ -33,20 +33,14 @@ class Bookly extends StatelessWidget {
         BlocProvider(
           create: (context) => FeaturedBooksCubit(
             FetchFeatueredBooksUseCase(
-              HomeRepoImplement(
-                homeRemoteDataSources: HomeRemoteDataSourcesImpel(),
-                homeLocalDataSource: HomeLocalDataSourceImple(),
-              ),
+              getit.get<HomeRepoImplement>(),
             ),
           ),
         ),
         BlocProvider(
           create: (context) => NewestBooksCubitCubit(
             FetchNewsBooksUseCase(
-              HomeRepoImplement(
-                homeRemoteDataSources: HomeRemoteDataSourcesImpel(),
-                homeLocalDataSource: HomeLocalDataSourceImple(),
-              ),
+              getit.get<HomeRepoImplement>(),
             ),
           ),
         ),
