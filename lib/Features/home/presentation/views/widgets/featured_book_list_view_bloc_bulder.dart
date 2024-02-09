@@ -1,3 +1,4 @@
+import 'package:bookly/Features/home/domain/entities/book_entity.dart';
 import 'package:bookly/Features/home/presentation/manager/featured_books_cubit/featured_books_cubit.dart';
 import 'package:bookly/Features/home/presentation/manager/featured_books_cubit/featured_books_state.dart';
 import 'package:bookly/Features/home/presentation/views/widgets/featured_list_view.dart';
@@ -19,6 +20,7 @@ class _FeaturedBooksListViewBlocBuilderState
   late ScrollController _scrollController;
   int nextPage = 1;
   bool isLoading = false;
+  List<BookEntity> booksList = [];
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -47,12 +49,22 @@ class _FeaturedBooksListViewBlocBuilderState
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeaturedBooksCubit, FeaturedBooksState>(
-      builder: (context, state) {
+    return BlocConsumer<FeaturedBooksCubit, FeaturedBooksState>(
+      listener: (context, state) {
         if (state is FeaturedBooksSuccess) {
+          booksList.addAll(state.books);
+        } else if (state is FeaturedBooksPaginationfailuer) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text(state.errorMessage)));
+        }
+      },
+      builder: (context, state) {
+        if (state is FeaturedBooksSuccess ||
+            state is FeaturedBooksPaginationLoading ||
+            state is FeaturedBooksPaginationfailuer) {
           return FeaturedBooksListView(
             controller: _scrollController,
-            booksList: state.books,
+            booksList: booksList,
           );
         } else if (state is FeaturedBooksFailuer) {
           return Text(state.errorMessage);

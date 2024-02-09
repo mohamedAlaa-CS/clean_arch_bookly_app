@@ -6,6 +6,14 @@ final class FeaturedBooksInitial extends FeaturedBooksState {}
 
 final class FeaturedBooksLoading extends FeaturedBooksState {}
 
+final class FeaturedBooksPaginationLoading extends FeaturedBooksState {}
+
+final class FeaturedBooksPaginationfailuer extends FeaturedBooksState {
+  final String errorMessage;
+
+  FeaturedBooksPaginationfailuer({required this.errorMessage});
+}
+
 final class FeaturedBooksFailuer extends FeaturedBooksState {
   final String errorMessage;
 
