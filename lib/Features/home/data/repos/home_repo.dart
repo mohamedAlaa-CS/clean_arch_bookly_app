@@ -19,10 +19,10 @@ class HomeRepoImplement extends HomeRepo {
       {int pageNumber = 0}) async {
     try {
       List<BookEntity> books;
-      // books = homeLocalDataSource.fetchFeatueredBooks();
-      // if (books.isNotEmpty) {
-      //   return right(books);
-      // }
+      books = homeLocalDataSource.fetchFeatueredBooks(pageNumber: pageNumber);
+      if (books.isNotEmpty) {
+        return right(books);
+      }
 
       books =
           await homeRemoteDataSources.fechFeaturedBooks(pageNumber: pageNumber);
