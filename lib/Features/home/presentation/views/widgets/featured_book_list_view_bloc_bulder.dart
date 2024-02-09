@@ -18,6 +18,7 @@ class _FeaturedBooksListViewBlocBuilderState
     extends State<FeaturedBooksListViewBlocBuilder> {
   late ScrollController _scrollController;
   int nextPage = 1;
+  bool isLoading = false;
   @override
   void initState() {
     _scrollController = ScrollController();
@@ -25,12 +26,22 @@ class _FeaturedBooksListViewBlocBuilderState
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _controllerLister() async {
     var currentPostion = _scrollController.position.pixels;
     var scrollLenght = _scrollController.position.maxScrollExtent;
     if (currentPostion >= 0.7 * scrollLenght) {
-      await FeaturedBooksCubit.get(context)
-          .fetchFeaturedBooks(pageNumber: nextPage++);
+      if (!isLoading) {
+        isLoading = true;
+        await FeaturedBooksCubit.get(context)
+            .fetchFeaturedBooks(pageNumber: nextPage++);
+        isLoading = false;
+      }
     }
   }
 
