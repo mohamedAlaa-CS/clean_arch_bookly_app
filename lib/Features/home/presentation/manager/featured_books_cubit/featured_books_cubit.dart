@@ -11,9 +11,9 @@ class FeaturedBooksCubit extends Cubit<FeaturedBooksState> {
   static FeaturedBooksCubit get(context) => BlocProvider.of(context);
 
   List<BookEntity> booksList = [];
-  Future<void> fetchFeaturedBooks() async {
+  Future<void> fetchFeaturedBooks({int pageNumber = 0}) async {
     emit(FeaturedBooksLoading());
-    var result = await fetchFeatueredBooksUseCase.call();
+    var result = await fetchFeatueredBooksUseCase.call(pageNumber);
     result.fold((failure) {
       emit(FeaturedBooksFailuer(errorMessage: failure.message));
     }, (success) {
