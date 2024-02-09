@@ -1,10 +1,11 @@
+import 'package:bookly/Features/home/domain/entities/book_entity.dart';
 import 'package:flutter/material.dart';
 
 import 'best_seller_list_view_item.dart';
 
 class BestSellerListView extends StatelessWidget {
-  const BestSellerListView({super.key});
-
+  const BestSellerListView({super.key, required this.bookslist});
+  final List<BookEntity> bookslist;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -12,11 +13,11 @@ class BestSellerListView extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: 20,
+      itemCount: bookslist.length,
       itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: BookListViewItem(),
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10),
+          child: BookListViewItem(model: bookslist[index]),
         );
       },
     );
